@@ -27,7 +27,7 @@ $profiles | ForEach-Object {
 function Production {
     $profiles | ForEach-Object {
     if(Test-Path "Registry::HKEY_USERS\$($_.PSChildName)" -ErrorAction SilentlyContinue ) {
-        if(Test-Path "Registry::HKEY_USERS\$($_.PSChildName)\Software\Microsoft\Windows\CurrentVersion\Uninstall\$($App)" -ErrorAction SilentlyContinue) {
+        if(Test-Path "Registry::HKEY_USERS\$($_.PSChildName)\Software\Microsoft\Windows\CurrentVersion\Uninstall\Wispr Flow" -ErrorAction SilentlyContinue) {
             Ninja-Property-Set "genericUseText" 1
         } else {
             Ninja-Property-Set "genericUseText" 0
