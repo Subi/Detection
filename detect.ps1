@@ -1,16 +1,13 @@
-<#
- Grabbed the SID from the profilelist because this includes offline profiles as well. Loop through each SID and check if active user by ""Registry::HKEY_USERS/{SID}""
- you can then remdiate if you detect program, if the checking for {SID} through HKEY_USERS failes , means profile is not active and Hive needs to be loaded then remediated
-#>
 
+# Set Command-Line Variables
 param (
     [string]$ENV,
     [string]$App
 )
-
-
+# Assign registry path for user profiles on machine
 $profileListPath =  "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList"
 $profiles = Get-ChildItem -Path $profileListPath | Get-ItemProperty | Where-Object {$null -ne $_.FullProfile} | Select-Object PSChildName
+
 
 function Development {
 $profiles | ForEach-Object {
@@ -39,6 +36,7 @@ function Production {
  }
 }
 
+#Initition script, passed in enviroment variables controls scripts flow.
 function Initialize-Script {
     if([string]::IsNullOrEmpty($ENV)){
         Production
